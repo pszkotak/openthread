@@ -48,11 +48,11 @@
 #include "nrf_802154_request.h"
 #include "nrf_802154_rsch.h"
 
-#define TX_SETUP_TIME 190  ///< Time [us] needed to change channel, stop rx and setup tx procedure.
+#define TX_SETUP_TIME 190            ///< Time [us] needed to change channel, stop rx and setup tx procedure.
 
-static const uint8_t * mp_tx_psdu;    ///< Pointer to PHR + PSDU of the frame requested to transmit.
-static bool            m_tx_cca;      ///< If CCA should be performed prior to transmission.
-static uint8_t         m_tx_channel;  ///< Channel number on which transmission should be performed.
+static const uint8_t * mp_tx_psdu;   ///< Pointer to PHR + PSDU of the frame requested to transmit.
+static bool            m_tx_cca;     ///< If CCA should be performed prior to transmission.
+static uint8_t         m_tx_channel; ///< Channel number on which transmission should be performed.
 
 /**
  * Check if delayed transmission procedure is in progress.
@@ -118,7 +118,11 @@ bool nrf_802154_delayed_trx_transmit(const uint8_t * p_data,
                                                      cca,
                                                      p_data[ACK_REQUEST_OFFSET] & ACK_REQUEST_BIT);
 
-        result = nrf_802154_rsch_delayed_timeslot_request(t0, dt, timeslot_length);
+        result = nrf_802154_rsch_delayed_timeslot_request(t0,
+                                                          dt,
+                                                          timeslot_length,
+                                                          RSCH_PRIO_MAX,
+                                                          RSCH_DLY_TX);
 
         if (!result)
         {
@@ -130,10 +134,11 @@ bool nrf_802154_delayed_trx_transmit(const uint8_t * p_data,
     return result;
 }
 
-void nrf_802154_rsch_delayed_timeslot_started(void)
+void nrf_802154_rsch_delayed_timeslot_started(rsch_dly_ts_id_t dly_ts_id)
 {
     bool result;
 
+    assert(dly_ts_id == RSCH_DLY_TX);
     assert(tx_is_in_progress());
 
     nrf_802154_pib_channel_set(m_tx_channel);
@@ -157,8 +162,9 @@ void nrf_802154_rsch_delayed_timeslot_started(void)
     tx_stop();
 }
 
-void nrf_802154_rsch_delayed_timeslot_failed(void)
+void nrf_802154_rsch_delayed_timeslot_failed(rsch_dly_ts_id_t dly_ts_id)
 {
+    assert(dly_ts_id == RSCH_DLY_TX);
     assert(tx_is_in_progress());
 
     notify_tx_timeslot_denied(false);
