@@ -40,6 +40,7 @@ DIST_SUBDIRS                            = \
     emsk                                  \
     gp712                                 \
     kw41z                                 \
+    nrf52811                              \
     nrf52840                              \
     posix                                 \
     samr21                                \
@@ -88,6 +89,10 @@ if OPENTHREAD_EXAMPLES_KW41Z
 SUBDIRS                                += kw41z
 endif
 
+if OPENTHREAD_EXAMPLES_NRF52811
+SUBDIRS                                += nrf52811
+endif
+
 if OPENTHREAD_EXAMPLES_NRF52840
 SUBDIRS                                += nrf52840
 endif
@@ -116,6 +121,7 @@ PRETTY_SUBDIRS                          = \
     emsk                                  \
     gp712                                 \
     kw41z                                 \
+    nrf52811                              \
     nrf52840                              \
     posix                                 \
     samr21                                \

@@ -1628,12 +1628,12 @@ AC_DEFINE_UNQUOTED([OPENTHREAD_ENABLE_ECDSA], [${OPENTHREAD_ENABLE_ECDSA}], [Def
 
 AC_ARG_WITH(examples,
     [AS_HELP_STRING([--with-examples=TARGET],
-        [Specify the examples from one of: none, posix, cc1352, cc2538, cc2650, cc2652, da15000, efr32, emsk, gp712, kw41z, nrf52840, samr21 @<:@default=none@:>@.])],
+        [Specify the examples from one of: none, posix, cc1352, cc2538, cc2650, cc2652, da15000, efr32, emsk, gp712, kw41z, nrf52811, nrf52840, samr21 @<:@default=none@:>@.])],
     [
         case "${with_examples}" in
         none)
             ;;
-        posix|cc1352|cc2538|cc2650|cc2652|da15000|efr32|emsk|gp712|kw41z|nrf52840|samr21)
+        posix|cc1352|cc2538|cc2650|cc2652|da15000|efr32|emsk|gp712|kw41z|nrf52811|nrf52840|samr21)
             if test ${enable_posix_app} = "yes"; then
                 AC_MSG_ERROR([--with-examples must be none when POSIX apps are enabled by --enable-posix-app])
             fi
@@ -1699,6 +1699,11 @@ case ${with_examples} in
         AC_DEFINE_UNQUOTED([OPENTHREAD_EXAMPLES_KW41Z],[${OPENTHREAD_EXAMPLES_KW41Z}],[Define to 1 if you want to use kw41z examples])
         ;;
 
+    nrf52811)
+        OPENTHREAD_EXAMPLES_NRF52811=1
+        AC_DEFINE_UNQUOTED([OPENTHREAD_EXAMPLES_NRF52811],[${OPENTHREAD_EXAMPLES_NRF52811}],[Define to 1 if you want to use nrf52811 examples])
+        ;;
+
     nrf52840)
         OPENTHREAD_EXAMPLES_NRF52840=1
         AC_DEFINE_UNQUOTED([OPENTHREAD_EXAMPLES_NRF52840],[${OPENTHREAD_EXAMPLES_NRF52840}],[Define to 1 if you want to use nrf52840 examples])
@@ -1747,6 +1752,9 @@ AM_CONDITIONAL([OPENTHREAD_EXAMPLES_GP712], [test "${with_examples}" = "gp712"])
 
 AC_SUBST(OPENTHREAD_EXAMPLES_KW41Z)
 AM_CONDITIONAL([OPENTHREAD_EXAMPLES_KW41Z], [test "${with_examples}" = "kw41z"])
+
+AC_SUBST(OPENTHREAD_EXAMPLES_NRF52811)
+AM_CONDITIONAL([OPENTHREAD_EXAMPLES_NRF52811], [test "${with_examples}" = "nrf52811"])
 
 AC_SUBST(OPENTHREAD_EXAMPLES_NRF52840)
 AM_CONDITIONAL([OPENTHREAD_EXAMPLES_NRF52840], [test "${with_examples}" = "nrf52840"])
@@ -1906,6 +1914,7 @@ examples/platforms/efr32/Makefile
 examples/platforms/emsk/Makefile
 examples/platforms/gp712/Makefile
 examples/platforms/kw41z/Makefile
+examples/platforms/nrf52811/Makefile
 examples/platforms/nrf52840/Makefile
 examples/platforms/samr21/Makefile
 examples/platforms/posix/Makefile
