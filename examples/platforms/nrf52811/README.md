@@ -1,6 +1,12 @@
 # OpenThread on nRF52811 Example
 
-This directory contains example platform drivers for Nordic Semiconductor nRF52811 SoC
+This directory contains example platform drivers for Nordic Semiconductor nRF52811 SoC.
+This SoC is ment to be used in simple rx-off-when-idle applications
+or in the Host / 802.15.4 Controller configuration in which the full OpenThread stack
+is running on the Host Processor and nRF52811 acts as a IEEE 802.15.4 radio running minimal OpenThread
+implementation allowing for communication between Host Processor and nRF52811.
+This firmware variant will be refered as RCP (Radio Co-Processor),
+NCP-Radio or simply radio-only in further part of this documentation.
 
 This example platform is under development.
 
@@ -30,7 +36,7 @@ After a successful build, the `elf` files can be found in
 `<path-to-openthread>/output/nrf52811/bin`.  You can convert them to `hex`
 files using `arm-none-eabi-objcopy`:
 ```bash
-$ arm-none-eabi-objcopy -O ihex ot-cli-ftd ot-cli-ftd.hex
+$ arm-none-eabi-objcopy -O ihex ot-ncp-radio ot-ncp-radio.hex
 ```
 
 ## Native SPI Slave support
@@ -41,7 +47,7 @@ To do so, build the libraries with the following parameter:
 $ make -f examples/Makefile-nrf52811 NCP_SPI=1
 ```
 
-With this option enabled, SPI communication between the NCP example and wpantund is possible
+With this option enabled, SPI communication between the RCP example and wpantund is possible
 (provided that the wpantund host supports SPI Master). To achieve that, an appropriate SPI device
 should be chosen in wpantund configuration file, `/etc/wpantund.conf`. You can find an example below.
 ```
