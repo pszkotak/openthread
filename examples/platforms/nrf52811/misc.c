@@ -34,33 +34,14 @@
 
 #include "platform-nrf5.h"
 
-#if SOFTDEVICE_PRESENT
-#include "softdevice.h"
-#endif
-
 static uint32_t sResetReason;
 
 bool gPlatformPseudoResetWasRequested;
 
-__WEAK void nrf5CryptoInit(void)
-{
-    // This function is defined as weak so it could be overridden with external implementation.
-}
-
-__WEAK void nrf5CryptoDeinit(void)
-{
-    // This function is defined as weak so it could be overridden with external implementation.
-}
-
 void nrf5MiscInit(void)
 {
-#if SOFTDEVICE_PRESENT
-    sd_power_reset_reason_get(&sResetReason);
-    sd_power_reset_reason_clr(0xFFFFFFFF);
-#else
     sResetReason         = NRF_POWER->RESETREAS;
     NRF_POWER->RESETREAS = 0xFFFFFFFF;
-#endif // SOFTDEVICE_PRESENT
 }
 
 void nrf5MiscDeinit(void)

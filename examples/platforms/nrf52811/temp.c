@@ -36,38 +36,28 @@
 #include "platform-nrf5.h"
 #include <drivers/radio/platform/temperature/nrf_802154_temperature.h>
 
-#if SOFTDEVICE_PRESENT
-#include "softdevice.h"
-#endif
-
 #define US_PER_S 1000000ULL
 
 static uint64_t sLastReadTimestamp;
 static int32_t  sTemperature;
 
-#if !SOFTDEVICE_PRESENT
 __STATIC_INLINE void dataReadyEventClear(void)
 {
     NRF_TEMP->EVENTS_DATARDY = 0;
     volatile uint32_t dummy  = NRF_TEMP->EVENTS_DATARDY;
     (void)dummy;
 }
-#endif
 
 void nrf5TempInit(void)
 {
-#if !SOFTDEVICE_PRESENT
     nrf_temp_init();
 
     NRF_TEMP->TASKS_START = 1;
-#endif
 }
 
 void nrf5TempDeinit(void)
 {
-#if !SOFTDEVICE_PRESENT
     NRF_TEMP->TASKS_STOP = 1;
-#endif
 }
 
 void nrf5TempProcess(void)
@@ -75,15 +65,6 @@ void nrf5TempProcess(void)
     int32_t  prevTemperature = sTemperature;
     uint64_t now;
 
-#if SOFTDEVICE_PRESENT
-    now = nrf5AlarmGetCurrentTime();
-
-    if (now - sLastReadTimestamp > (TEMP_MEASUREMENT_INTERVAL * US_PER_S))
-    {
-        (void)sd_temp_get(&sTemperature);
-        sLastReadTimestamp = now;
-    }
-#else
     if (NRF_TEMP->EVENTS_DATARDY)
     {
         dataReadyEventClear();
@@ -98,7 +79,6 @@ void nrf5TempProcess(void)
         NRF_TEMP->TASKS_START = 1;
         sLastReadTimestamp    = now;
     }
-#endif
 
     if (prevTemperature != sTemperature)
     {

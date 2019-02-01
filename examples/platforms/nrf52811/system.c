@@ -78,7 +78,6 @@ void otSysInit(int argc, char *argv[])
     if (!gPlatformPseudoResetWasRequested)
     {
         nrf5UartInit();
-        nrf5CryptoInit();
     }
     else
     {
@@ -109,7 +108,6 @@ void otSysDeinit(void)
 #endif
     if (!gPlatformPseudoResetWasRequested)
     {
-        nrf5CryptoDeinit();
         nrf5UartDeinit();
     }
     nrf5RandomDeinit();

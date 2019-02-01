@@ -161,18 +161,6 @@ void nrf5RadioDeinit(void);
 void nrf5RadioProcess(otInstance *aInstance);
 
 /**
- * Initialization of hardware crypto engine.
- *
- */
-void nrf5CryptoInit(void);
-
-/**
- * Deinitialization of hardware crypto engine.
- *
- */
-void nrf5CryptoDeinit(void);
-
-/**
  * Function for erasing page in flash.
  *
  */
@@ -215,19 +203,5 @@ void nrf5TempProcess(void);
  *
  */
 int32_t nrf5TempGet(void);
-
-#if SOFTDEVICE_PRESENT
-/**
- * Function for translating SoftDevice error into OpenThread's one.
- *
- */
-otError nrf5SdErrorToOtError(uint32_t aSdError);
-
-/**
- * Function for processing SoftDevice SoC events in flash module.
- *
- */
-void nrf5SdSocFlashProcess(uint32_t aEvtId);
-#endif // SOFTDEVICE_PRESENT
 
 #endif // PLATFORM_NRF5_H_

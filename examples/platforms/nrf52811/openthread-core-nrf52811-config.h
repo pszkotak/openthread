@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018, The OpenThread Authors.
+ *  Copyright (c) 2019, The OpenThread Authors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -124,7 +124,7 @@
  * Define to 1 if you want to support microsecond timer in platform.
  *
  */
-#define OPENTHREAD_CONFIG_ENABLE_PLATFORM_USEC_TIMER     1
+#define OPENTHREAD_CONFIG_ENABLE_PLATFORM_USEC_TIMER            1
 
 /**
  * @def SETTINGS_CONFIG_BASE_ADDRESS

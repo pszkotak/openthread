@@ -26,6 +26,10 @@ $ ./script/bootstrap
 
 ## Building the examples
 
+Examples consist of two parts: firmware that is flashed to the nRF52811 SoC
+and host executables that are supposed to be executed on a POSIX platform in case of RCP usage.
+
+### Building the firmware
 ```bash
 $ cd <path-to-openthread>
 $ ./bootstrap
@@ -36,8 +40,20 @@ After a successful build, the `elf` files can be found in
 `<path-to-openthread>/output/nrf52811/bin`.  You can convert them to `hex`
 files using `arm-none-eabi-objcopy`:
 ```bash
+$ arm-none-eabi-objcopy -O ihex ot-cli-mtd ot-cli-mtd.hex
 $ arm-none-eabi-objcopy -O ihex ot-ncp-radio ot-ncp-radio.hex
 ```
+
+### Building host executables
+```bash
+$ cd <path-to-openthread>
+$ ./bootstrap
+$ make -f src/posix/Makefile-posix
+```
+
+After a successful build, executables can be found in
+`<path-to-openthread>/openthread/output/posix/<system-architecture>/bin`.
+It is recommended to copy them to `/usr/bin` for easier access.
 
 ## Native SPI Slave support
 
@@ -55,14 +71,14 @@ Config:NCP:SocketPath "system:/usr/bin/ot-ncp /usr/bin/spi-hdlc-adapter -- '--st
 ```
 
 [spi-hdlc-adapter][spi-hdlc-adapter]
-is a tool that can be used to perform communication between NCP and wpantund over SPI.
+is a tool that can be used to perform communication between RCP and wpantund over SPI.
 In the above example it is assumed that `spi-hdlc-adapter` is installed in `/usr/bin`.
 
 The default SPI Slave pin configuration for nRF52811 is defined in `examples/platforms/nrf52811/platform-config.h`.
 
 [spi-hdlc-adapter]: https://github.com/openthread/openthread/tree/master/tools/spi-hdlc-adapter
 
-## Flashing the binaries
+## Flashing binaries
 
 Flash the compiled binaries onto nRF52811 using `nrfjprog` which is
 part of the [nRF5x Command Line Tools][nRF5x-Command-Line-Tools].
@@ -75,16 +91,29 @@ $ nrfjprog -f nrf52 --chiperase --program output/nrf52811/bin/ot-cli-mtd.hex --r
 
 ## Running the example
 
-1. Prepare two boards with the flashed `CLI Example` (as shown above).
-2. The CLI example uses UART connection. To view raw UART output, start a terminal
-   emulator like PuTTY and connect to the used COM port with the following UART settings:
-    - Baud rate: 115200
-    - 8 data bits
-    - 1 stop bit
-    - No parity
-    - HW flow control: RTS/CTS
+1. Prepare two boards. One flashed with the `CLI MTD Example` (ot-cli-mtd.hex, as shown above),
+   and the other one flashed with the `RCP Example` (ot-ncp-radio.hex).
 
-   On Linux system a port name should be called e.g. `/dev/ttyACM0` or `/dev/ttyACM1`.
+2. Connect the RCP to the PC. Start the ot-cli host application and connect with the RCP.
+   It is assumed that the UART version of RCP is being used (make executed without NCP=SPI=1 flag).
+   On Linux system a port name should be called e.g. `/dev/ttyACM0`(for first connected development kit),
+   `/dev/ttyACM1` (for the second one).
+
+```bash
+$ /usr/bin/ot-cli /dev/ttyACM0 115200
+```
+
+Now you are connected with the CLI, commands below shoud be used to form a network:
+```bash
+ > panid 0xabcd
+ Done
+ > ifconfig up
+ Done
+ > thread start
+ Done
+```
+
+   
 3. Open a terminal connection on the first board and start a new Thread network.
 
  ```bash
@@ -103,7 +132,20 @@ $ nrfjprog -f nrf52 --chiperase --program output/nrf52811/bin/ot-cli-mtd.hex --r
  Leader
  ```
 
-5. Open a terminal connection on the second board and attach a node to the network.
+2. The CLI MTD example uses the direct UART connection. To view raw UART output, start a terminal
+   emulator like screen and connect to the used COM port with the following UART settings:
+    - Baud rate: 115200
+    - 8 data bits
+    - 1 stop bit
+    - No parity
+    - HW flow control: RTS/CTS
+   Open a terminal connection on the second board and attach a node to the network.
+
+ ```bash
+ screen /dev/ttyACM1 115200
+ ```
+
+Now you are connected with the CLI, commands below shoud be used to form a network:
 
  ```bash
  > panid 0xabcd
