@@ -24,6 +24,8 @@ $ ./script/bootstrap
 
 ## Building the examples
 
+ To build the examples, run the following command in Bash:
+
 ```bash
 $ cd <path-to-openthread>
 $ ./bootstrap
@@ -31,46 +33,41 @@ $ make -f examples/Makefile-nrf52840
 ```
 
 After a successful build, the `elf` files can be found in
-`<path-to-openthread>/output/nrf52840/bin`.  
-You can convert them to hex using arm-none-eabi-objcopy`:
+`<path-to-openthread>/output/nrf52840/bin`.  You can convert them to `hex`
+files using `arm-none-eabi-objcopy`:
+
 ```bash
 $ arm-none-eabi-objcopy -O ihex ot-cli-ftd ot-cli-ftd.hex
 ```
 
-## Native USB support
-
-You can build the libraries with support for native USB CDC ACM as a serial transport.
-To do so, build the libraries with the following parameter:
+You can build the libraries with support for the native USB CDC ACM as a serial transport.
+To do so, build the firmware with the following parameter:
 ```
 $ make -f examples/Makefile-nrf52840 USB=1
 ```
 
 Note, that if Windows 7 or earlier is used, an additional USB CDC driver has to be loaded.
-It can be found in third_party/NordicSemiconductor/libraries/usb/nordic_cdc_acm_example.inf
+It can be found in `third_party/NordicSemiconductor/libraries/usb/nordic_cdc_acm_example.inf`
 
 ## nRF52840 dongle support (PCA10059)
-You can build the libraries with support for USB bootloader with automatic USB DFU trigger support in PCA10059. As this dongle uses native USB support we have to enable it as well. To do so, build the libraries with the following parameter:
+
+You can build the libraries with support for USB bootloader with automatic USB DFU trigger support in PCA10059. As this dongle uses the native USB support, you must enable it as well.
+
+To build the libraries, run make with the following parameter:
+
 ```
 $ make -f examples/Makefile-nrf52840 USB=1 BOOTLOADER=1
 ```
-Please see [nRF52840 Dongle Programming][nrf52840-dongle-programming] for more details about how to use USB bootloader.
+
+See [nRF52840 Dongle Programming][nrf52840-dongle-programming] for more details about how to use the USB bootloader.
 
 [nrf52840-dongle-programming]: https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf52%2Fdita%2Fnrf52%2Fdevelopment%2Fnrf52840_dongle%2Fprogramming.html&cp=2_0_4_4
 
-## Prefixing compiler command
+## Native SPI Slave support
 
-You can prefix compiler command using CCPREFIX parameter. This is useful when you utilize tools like [ccache][ccache-website] to speed up compilation. Example usage:
+You can build the libraries with support for native SPI Slave.
+To build the libraries, run make with the following parameter:
 
-[ccache-website]: https://ccache.samba.org/
-
-```
-$ make -f examples/Makefile-nrf52840 USB=1 CCPREFIX=ccache
-```
-
-## Building the examples with native SPI Slave support
-
-You can build the libraries with support for the native SPI Slave.
-To do so, build the libraries with the following parameter:
 ```
 $ make -f examples/Makefile-nrf52840 NCP_SPI=1
 ```
@@ -92,6 +89,16 @@ Note that the native SPI Slave support is not intended to be used with Engineeri
 single transfer size limitation.
 
 [spi-hdlc-adapter]: https://github.com/openthread/openthread/tree/master/tools/spi-hdlc-adapter
+
+### Optional prefix for compiler command
+
+You can prefix the compiler command using the CCPREFIX parameter. This speeds up the compilation when you use tools like [ccache][ccache-website]. Example usage:
+
+[ccache-website]: https://ccache.samba.org/
+
+```
+$ make -f examples/Makefile-nrf52840 USB=1 CCPREFIX=ccache
+```
 
 ## CryptoCell 310 support
 
