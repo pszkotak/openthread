@@ -10,12 +10,12 @@ To facilitate Thread products development with the nRF52840 platform, Nordic Sem
 
 ## Toolchain
 
-Download and install [GNU toolchain for ARM Cortex-M][gnu-toolchain].
+Download and install the [GNU toolchain for ARM Cortex-M][gnu-toolchain].
 
 [gnu-toolchain]: https://launchpad.net/gcc-arm-embedded
 
-In a Bash terminal, follow these instructions to install the GNU toolchain and
-other dependencies.
+To install the GNU toolchain and its dependencies,
+run the following commands in Bash:
 
 ```bash
 $ cd <path-to-openthread>
@@ -31,8 +31,8 @@ $ make -f examples/Makefile-nrf52840
 ```
 
 After a successful build, the `elf` files can be found in
-`<path-to-openthread>/output/nrf52840/bin`.  You can convert them to `hex`
-files using `arm-none-eabi-objcopy`:
+`<path-to-openthread>/output/nrf52840/bin`.  
+You can convert them to hex using arm-none-eabi-objcopy`:
 ```bash
 $ arm-none-eabi-objcopy -O ihex ot-cli-ftd ot-cli-ftd.hex
 ```
@@ -67,9 +67,9 @@ You can prefix compiler command using CCPREFIX parameter. This is useful when yo
 $ make -f examples/Makefile-nrf52840 USB=1 CCPREFIX=ccache
 ```
 
-## Native SPI Slave support
+## Building the examples with native SPI Slave support
 
-You can build the libraries with support for native SPI Slave.
+You can build the libraries with support for the native SPI Slave.
 To do so, build the libraries with the following parameter:
 ```
 $ make -f examples/Makefile-nrf52840 NCP_SPI=1

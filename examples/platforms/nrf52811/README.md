@@ -1,23 +1,21 @@
 # OpenThread on nRF52811 Example
 
-This directory contains example platform drivers for Nordic Semiconductor nRF52811 SoC.
-This SoC is ment to be used in simple rx-off-when-idle applications
-or in the Host / 802.15.4 Controller configuration in which the full OpenThread stack
+This directory contains platform drivers for the Nordic Semiconductor nRF52811 SoC.
+This SoC is ment to be used in the Host / IEEE 802.15.4 Controller configuration in which the full OpenThread stack
 is running on the Host Processor and nRF52811 acts as a IEEE 802.15.4 radio running minimal OpenThread
 implementation allowing for communication between Host Processor and nRF52811.
-This firmware variant will be refered as RCP (Radio Co-Processor),
-NCP-Radio or simply radio-only in further part of this documentation.
+This firmware variant will be refered as RCP (Radio Co-Processor) or NCP-Radio.
 
-This example platform is under development.
+This platform is currently under development.
 
 ## Toolchain
 
-Download and install [GNU toolchain for ARM Cortex-M][gnu-toolchain].
+Download and install the [GNU toolchain for ARM Cortex-M][gnu-toolchain].
 
 [gnu-toolchain]: https://launchpad.net/gcc-arm-embedded
 
-In a Bash terminal, follow these instructions to install the GNU toolchain and
-other dependencies.
+To install the GNU toolchain and its dependencies,
+run the following commands in Bash:
 
 ```bash
 $ cd <path-to-openthread>
@@ -37,8 +35,8 @@ $ make -f examples/Makefile-nrf52811
 ```
 
 After a successful build, the `elf` files can be found in
-`<path-to-openthread>/output/nrf52811/bin`.  You can convert them to `hex`
-files using `arm-none-eabi-objcopy`:
+`<path-to-openthread>/output/nrf52811/bin`.  
+You can convert them to hex using arm-none-eabi-objcopy`:
 ```bash
 $ arm-none-eabi-objcopy -O ihex ot-cli-mtd ot-cli-mtd.hex
 $ arm-none-eabi-objcopy -O ihex ot-ncp-radio ot-ncp-radio.hex
@@ -55,9 +53,9 @@ After a successful build, executables can be found in
 `<path-to-openthread>/openthread/output/posix/<system-architecture>/bin`.
 It is recommended to copy them to `/usr/bin` for easier access.
 
-## Native SPI Slave support
+## Building the examples with native SPI Slave support
 
-You can build the libraries with support for native SPI Slave.
+You can build the libraries with support for the native SPI Slave.
 To do so, build the libraries with the following parameter:
 ```
 $ make -f examples/Makefile-nrf52811 NCP_SPI=1
