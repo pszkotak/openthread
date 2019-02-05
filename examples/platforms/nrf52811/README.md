@@ -6,6 +6,10 @@ The radio is running a minimal OpenThread implementation that allows for communi
 
 The nRF52811 platform is currently under development.
 
+For the SoC capable to a run full OpenThread stack please check the [nRF52840 platform][nRF52840-page].
+
+[nRF52840-page]: ./../nrf52840/README.md
+
 ## Toolchain
 
 Download and install the [GNU toolchain for ARM Cortex-M][gnu-toolchain].
@@ -36,7 +40,7 @@ $ ./bootstrap
 $ make -f examples/Makefile-nrf52811
 ```
 
-You can build the firmware with support for the native SPI Slave.
+Alternatively you can build the firmware with support for the native SPI Slave transport.
 To build the firmware with the native SPI Slave support, run `make` with the `NCP_SPI=1` parameter:
 
 ```bash
