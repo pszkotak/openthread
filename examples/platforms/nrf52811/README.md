@@ -76,7 +76,7 @@ To do so, build the libraries with the following parameter:
 $ make -f examples/Makefile-nrf52811 NCP_SPI=1
 ```
 
-With `NCP_SPI` option enabled, SPI communication between the RCP example and wpantund is possible
+With the `NCP_SPI` option enabled, SPI communication between the RCP example and wpantund is possible
 (provided that the wpantund host supports SPI Master).
 To achieve the communication between the RCP example and wpantund,
 choose an appropriate SPI device in the wpantund configuration file,
@@ -97,7 +97,6 @@ The default SPI Slave pin configuration for nRF52811 is defined in `examples/pla
 ### Building the host executables
 
 To build the host executables, run the following make commands:
-
 
 ```bash
 $ cd <path-to-openthread>
@@ -132,7 +131,7 @@ To test the example:
 
 3. Flash `RCP Example` (ot-ncp-radio.hex) to the other board.
 
-4. Connect the RCP to the PC. 
+4. Connect the RCP to the PC.
 
 5. Start the ot-cli host application and connect with the RCP.
    It is assumed that the default UART version of RCP is being used (make executed without the NCP=SPI=1 flag).
@@ -183,7 +182,7 @@ After a couple of seconds the node will become a Leader of the network.
     - No parity
     - HW flow control: RTS/CTS
 
-On Linux system, run the following to connect to the second board.
+Run the following to connect to the second board.
 
  ```bash
  screen /dev/ttyACM1 115200
@@ -256,7 +255,7 @@ Depending on your software version, a known issue in SEGGER's J-Link firmware ca
 
 ## Diagnostic module
 
-nRF52811 supports, with some additional features [OpenThread Diagnostics Module][DIAG].
+nRF52811 supports [OpenThread Diagnostics Module][DIAG], with some additional features.
 
 For more information, see [nRF Diag command reference][nRFDIAG].
 

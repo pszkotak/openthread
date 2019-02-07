@@ -46,10 +46,10 @@ To do so, build the firmware with the following parameter:
 $ make -f examples/Makefile-nrf52840 USB=1
 ```
 
-Note, that if Windows 7 or earlier is used, an additional USB CDC driver has to be loaded.
-It can be found in `third_party/NordicSemiconductor/libraries/usb/nordic_cdc_acm_example.inf`
+If you are using Windows 7 or earlier, you must load an additional USB CDC driver.
+The driver can be found in `third_party/NordicSemiconductor/libraries/usb/nordic_cdc_acm_example.inf`.
 
-## nRF52840 dongle support (PCA10059)
+### nRF52840 dongle support (PCA10059)
 
 You can build the libraries with support for USB bootloader with automatic USB DFU trigger support in PCA10059. As this dongle uses the native USB support, you must enable it as well.
 
@@ -63,7 +63,7 @@ See [nRF52840 Dongle Programming][nrf52840-dongle-programming] for more details 
 
 [nrf52840-dongle-programming]: https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf52%2Fdita%2Fnrf52%2Fdevelopment%2Fnrf52840_dongle%2Fprogramming.html&cp=2_0_4_4
 
-## Native SPI Slave support
+### Native SPI Slave support
 
 You can build the libraries with support for native SPI Slave.
 To build the libraries, run make with the following parameter:
@@ -100,7 +100,7 @@ You can prefix the compiler command using the CCPREFIX parameter. This speeds up
 $ make -f examples/Makefile-nrf52840 USB=1 CCPREFIX=ccache
 ```
 
-## CryptoCell 310 support
+### CryptoCell 310 support
 
 By default, mbedTLS library is built with support for CryptoCell 310 hardware acceleration of cryptographic operations used in OpenThread. You can disable CryptoCell 310 and use software cryptography instead by building OpenThread with the following parameter:
 ```
